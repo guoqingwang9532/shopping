@@ -149,7 +149,7 @@ a:visited{
     </tr>
   <tr>
     <td>
-      <form action="/index.php/Admin/Goods/edit/id/25.html" method="post" enctype="multipart/form-data">
+      <form action="/index.php/Admin/Goods/edit/id/27.html" method="post" enctype="multipart/form-data">
       
         <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#a8c7ce" id="general-tab-content">
 

@@ -5,16 +5,21 @@
 <title>Skiyo 后台管理工作平台 by Jessica</title>
 <link rel="stylesheet" type="text/css" href="{:C('AD_CSS_URL')}style.css"/>
 <script type="text/javascript" src="{:C('AD_JS_URL')}js.js"></script>
+<script type="text/javascript">
+  
+
+
+</script>
 </head>
 <body>
 <div id="top">  </div>
-<form id="login" name="login" action="main.php" method="post">
+<form id="login" name="login" action="__SELF__" method="post">
   <div id="center">
     <div id="center_left"></div>
     <div id="center_middle">
       <div class="user">
         <label>用户名：
-        <input type="text" name="user" id="user" />
+        <input type="text" name="name" id="user" />
         </label>
       </div>
       <div class="user">
@@ -24,9 +29,10 @@
       </div>
       <div class="chknumber">
         <label>验证码：
-        <input name="chknumber" type="text" id="chknumber" maxlength="4" class="chknumber_input" />
+        <input name="capache" type="text" id="chknumber" maxlength="4" class="chknumber_input" />
+        
+        <img src="{:U('Maneger/capache')}" id="safecode" onclick="this.src='__CONTROLLER__/capache/_/'+Math.random()" />
         </label>
-        <img src="{:C('AD_IMG_URL')}checkcode.png" id="safecode" />
       </div>
     </div>
     <div id="center_middle_right"></div>

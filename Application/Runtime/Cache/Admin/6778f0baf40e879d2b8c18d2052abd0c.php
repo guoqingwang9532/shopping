@@ -70,35 +70,11 @@ a:link{
 <body>
 <div  style="height:100%;">
   <ul id="navigation">
-    <li> <a class="head">商品管理</a>
-      <ul>
-        <li><a href="<?php echo U('Goods/showlist');?>" target="rightFrame">商品列表</a></li>
-        <li><a href="Articles.php" target="rightFrame">商品分类</a></li>
-      </ul>
-    </li>
-    <li> <a class="head">分类管理</a>
-      <ul>
-        <li><a href="<?php echo U('Goods/tianjia');?>" target="rightFrame">添加分类</a></li>
-        <li><a href="Kinds.php" target="rightFrame">查看/删除分类</a></li>
-      </ul>
-    </li>
-    <li> <a class="head">留言评论管理</a>
-      <ul>
-        <li><a href="messages.php" target="rightFrame">查看/删除留言</a></li>
-        <li><a href="comments.php" target="rightFrame">查看/删除评论</a></li>
-      </ul>
-    </li>
-    <li> <a class="head">友情链接管理</a>
-      <ul>
-        <li><a href="AddLink.php" target="rightFrame">添加友情链接</a></li>
-        <li><a href="Links.php" target="rightFrame">查看/修改友情链接</a></li>
-      </ul>
-    </li>
-    <li> <a class="head">版本信息</a>
-      <ul>
-        <li><a href="http://Www.865171.cn" target="_blank">by Jessica(865171.cn)</a></li>
-      </ul>
-    </li>
+  	<?php if(is_array($authtop)): $i = 0; $__LIST__ = $authtop;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vol): $mod = ($i % 2 );++$i;?><li> <a class="head"><?php echo ($vol["auth_name"]); ?></a>
+	      <ul>
+		      <?php if(is_array($authsec)): $i = 0; $__LIST__ = $authsec;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i; if(($vol["id"]) == $v["auth_pid"]): ?><li><a href="/index.php/Admin/<?php echo ($v["auth_c"]); ?>/<?php echo ($v["auth_a"]); ?>" target="rightFrame"><?php echo ($v["auth_name"]); ?></a></li><?php endif; endforeach; endif; else: echo "" ;endif; ?>
+	      </ul>
+	    </li><?php endforeach; endif; else: echo "" ;endif; ?>
   </ul>
 </div>
 </body>
