@@ -87,12 +87,23 @@ a:visited{
            html+='<td height="20" bgcolor="#FFFFFF" class="STYLE6">'
            html+='<div align="right"><span class="STYLE19" onclick="$(this).parent().parent().parent().remove();" >[-]商品相册：</span></div></td>'
            html+='<td height="20" bgcolor="#FFFFFF" class="STYLE6"><div align="left"><span class="STYLE19"><input type="file" name="goods_pics[]"></span> </div></td></tr>'    
-            
-      
-      
       $('#gallery-tab-content').append(html);
 
 
+  }
+
+  //利用ajax处理选择类型就显示对应得属性
+  function showAttr(id) {
+    $.post("{:U('Attr/ajaxR')}",{'id' : id},function(data) {
+        var html = '';
+        for(var i=0; i<data.length;i++) {
+          html+='<tr>\
+          <td height="20" bgcolor="#FFFFFF" class="STYLE6" align="right">'+data[i].attr_name+'</td>\
+          <td  height="20" bgcolor="#FFFFFF" class="STYLE6" align="left"><input type="text"></td>\
+        </tr>';
+        }
+        $('#attrCheck').html(html);
+    },'json')
   }
 
 
@@ -179,7 +190,30 @@ a:visited{
           </table>
           <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#a8c7ce" id='properties-tab-content'style='display: none;'>
             <tr>
-              <td height="20" bgcolor="#FFFFFF" class="STYLE6"><div align="right"><span class="STYLE19">商品属性：</span></div></td>
+              <td height="20" bgcolor="#FFFFFF" class="STYLE6"><div align="right"><span class="STYLE19">商品属性：</span></div>
+              </td>
+              <td height="20" bgcolor="#FFFFFF" class="STYLE6"align='left'>
+                <select name='Type_name' onchange='showAttr(this.value)'>
+                  <option value='0'>全部分类</option>
+                  <volist name='data' id='vol'>
+                    <option value='{$vol.id}'>{$vol.type_name}</option>
+                  </volist>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td height="20" bgcolor="#FFFFFF" class="STYLE6" colspan='2'>
+                <table id='attrCheck' width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#a8c7ce">
+                  <tr>
+                    <td height="20" bgcolor="#FFFFFF" class="STYLE6">
+                      
+                    </td>
+                    <td height="20" bgcolor="#FFFFFF" class="STYLE6">
+                      
+                    </td>
+                  </tr>
+                </table>
+              </td>
             </tr>
           </table>
           <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#a8c7ce" id='gallery-tab-content'style='display: none;'>

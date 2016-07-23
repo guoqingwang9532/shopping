@@ -4,7 +4,7 @@ use Think\Controller;
 
 //管理员登录界面
 
-class ManegerController extends Controller
+class ManegerController extends AdminController
 {
 	//登录
 	public function login()

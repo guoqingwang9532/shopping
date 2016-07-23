@@ -4,7 +4,7 @@ use Think\Controller;
 
 //管理权限的类
 
-class AuthController extends Controller
+class AuthController extends AdminController
 {
 	//showlist
 	public function showlist()

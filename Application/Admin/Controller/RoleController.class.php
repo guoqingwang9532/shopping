@@ -4,7 +4,7 @@ use Think\Controller;
 
 //role的类
 
-class RoleController extends Controller
+class RoleController extends AdminController
 {
 	//显示角色列表
 	public function showlist()
@@ -28,9 +28,11 @@ class RoleController extends Controller
 		if (IS_POST) {
 			$data = I('post.');
 			//dump($data);die;
+			//dump($data);
 			$role_auth_ids = implode(',', $data['role_auth_id']);
+
 			$role_auth_ac = $this->mkAc($role_auth_ids);
-			//dump($role_auth_ac);die;
+			//dump($role_auth_ids);die;
 			$roleArr = array(
 				'id' => $id,
 				'role_auth_ids' => $role_auth_ids,

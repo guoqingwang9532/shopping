@@ -53,7 +53,7 @@ a:visited{
               </tr>
             </table></td>
             <td><div align="right"><span class="STYLE1">
-              <a href="tianjia.html"><img src="<?php echo C('AD_IMG_URL');?>add.gif" width="10" height="10" /> 添加</a>   &nbsp; 
+              <a href="<?php echo U('Type/tianjia');?>"><img src="<?php echo C('AD_IMG_URL');?>add.gif" width="10" height="10" /> 添加</a>   &nbsp; 
               </span>
               <span class="STYLE1"> &nbsp;</span></div></td>
           </tr>
@@ -68,24 +68,22 @@ a:visited{
           <input type="checkbox" name="checkbox" id="checkbox" />
         </div></td>
         <td width="10%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">id</span></div></td>
-        <td width="15%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">角色名</span></div></td>
-        <td width="19%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">权限id</span></div></td>
-        <td width="30%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">角色权限</span></div></td>
-        <td width="25%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">操作</span></div></td>
+        <td width="15%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">类型名称</span></div></td>
+        <td width="14%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">属性数量</span></div></td>
+        <td width="14%" height="20" bgcolor="d3eaef" class="STYLE6"><div align="center"><span class="STYLE10">基本操作</span></div></td>
       </tr>
       <?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vol): $mod = ($i % 2 );++$i;?><tr>
         <td height="20" bgcolor="#FFFFFF"><div align="center">
           <input type="checkbox" name="checkbox2" id="checkbox2" />
         </div></td>
         <td height="20" bgcolor="#FFFFFF" class="STYLE6"><div align="center"><span class="STYLE19"><?php echo ($vol["id"]); ?></span></div></td>
-        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><?php echo ($vol["role_name"]); ?></div></td>
-        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><?php echo ($vol["role_auth_ids"]); ?></div></td>
-        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><?php echo ($vol["role_auth_ac"]); ?></div>
+        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><?php echo ($vol["type_name"]); ?></div></td>
+        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center"><?php echo ($vol["attr_num"]); ?></div></td>
         <td height="20" bgcolor="#FFFFFF"><div align="center" class="STYLE21">
-        <img src="<?php echo C('AD_IMG_URL');?>del.gif" width="10" height="10" /> 删除 | 查看 | <a href='/index.php/Admin/Role/edit/id/<?php echo ($vol["id"]); ?>'><img src="<?php echo C('AD_IMG_URL');?>edit.gif" width="10" height="10" /> 编辑</a></div></td>
+        <a href="<?php echo U('Attr/showlist');?>">商品属性列表</a>
+        <img src="<?php echo C('AD_IMG_URL');?>del.gif" width="10" height="10" /> 删除 | 查看 | <img src="<?php echo C('AD_IMG_URL');?>edit.gif" width="10" height="10" /> 编辑</div></td>
       </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-    </table>
-    </td>
+    </table></td>
   </tr>
   <tr>
     <td height="30"><table width="100%" border="0" cellspacing="0" cellpadding="0">

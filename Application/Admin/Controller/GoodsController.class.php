@@ -3,7 +3,7 @@ namespace Admin\Controller;
 use Think\Controller;
 //用户添加
 
-class GoodsController extends Controller
+class GoodsController extends AdminController
 {
 	//用户添加
 	public function tianjia()
@@ -30,6 +30,9 @@ class GoodsController extends Controller
 				}
 			
 		} else {
+			$typeModel = M('type');
+			$data = $typeModel->select();
+			$this->assign('data', $data);
 			$this->display();
 		}
 

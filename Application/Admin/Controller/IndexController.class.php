@@ -4,7 +4,7 @@ use Think\Controller;
 
 //后台页面控制器
 
-class IndexController extends Controller
+class IndexController extends AdminController
 {
 	//主页
 	public function index()

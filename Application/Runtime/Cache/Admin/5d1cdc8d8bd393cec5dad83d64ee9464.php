@@ -13,7 +13,7 @@
 </head>
 <body>
 <div id="top">  </div>
-<form id="login" name="login" action="/index.php/admin/maneger/login" method="post">
+<form id="login" name="login" action="/index.php/Admin/Maneger/login.html" method="post">
   <div id="center">
     <div id="center_left"></div>
     <div id="center_middle">
