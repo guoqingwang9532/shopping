@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+<!-- 	<select id='province'>
+	<option>省份/直辖市</option>
+	遍历省份/直辖市信息
+        <foreach name="data" item="p">
+	   <option value="{$p.id}">{$p.name}</option>
+	</foreach>
+</select> -->
+	<table>
+	<tr>
+		<td>id</td>
+		<td>省</td>
+		
+	</tr>
+	<foreach name='province' item='province'>
+		<tr>
+			<td>{$province.id}</td>
+			<td>{$province.name}</td>
+			
+		</tr>
+	</foreach>
+</table>
+
+
+	<select id='province'>
+		<option>省份/直辖市</option>
+		<!-- 遍历省份/直辖市信息 -->
+        <volist name="province" id="p">
+		   <option value="{$p.id}">{$p.name}</option>
+		</volist>>
+</select>
+</body>
+</html>

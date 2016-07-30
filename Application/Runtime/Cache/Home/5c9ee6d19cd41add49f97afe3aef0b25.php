@@ -62,7 +62,7 @@
 						<li class="checkcode">
 							<label for="">验证码：</label>
 							<input type="text"  name="checkcode" />
-							<img src="<?php echo C('IMG_URL');?>checkcode1.jpg" alt="" />
+							<img src="<?php echo U('User/captche');?>" alt="" onclick='this.src="/index.php/Home/User/captche/_/"+Math.random()'/>
 							<span>看不清？<a href="">换一张</a></span>
 						</li>
 						<li>

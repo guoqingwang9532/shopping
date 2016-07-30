@@ -48,27 +48,27 @@
 		</div>
 		<div class="login_bd">
 			<div class="login_form fl">
-				<form action="" method="post">
+				<form action="/index.php/Home/User/register.html" method="post">
 					<ul>
 						<li>
 							<label for="">用户名：</label>
-							<input type="text" class="txt" name="username" />
+							<input type="text" class="txt" name="name" />
 							<p>3-20位字符，可由中文、字母、数字和下划线组成</p>
 						</li>
 						<li>
 							<label for="">密码：</label>
-							<input type="password" class="txt" name="password" />
+							<input type="password" class="txt" name="pwd" />
 							<p>6-20位字符，可使用字母、数字和符号的组合，不建议使用纯数字、纯字母、纯符号</p>
 						</li>
 						<li>
 							<label for="">确认密码：</label>
-							<input type="password" class="txt" name="password" />
+							<input type="password" class="txt" name="repwd" />
 							<p> <span>请再次输入密码</p>
 						</li>
 						<li class="checkcode">
 							<label for="">验证码：</label>
 							<input type="text"  name="checkcode" />
-							<img src="<?php echo C('IMG_URL');?>checkcode1.jpg" alt="" />
+							<img src="<?php echo U('user/captche');?>" alt="" onclick='this.src="/index.php/Home/user/captche/_/"+Math.random()'/>
 							<span>看不清？<a href="">换一张</a></span>
 						</li>
 						<li>

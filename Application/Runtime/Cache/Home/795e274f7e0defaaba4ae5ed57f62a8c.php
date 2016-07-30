@@ -32,7 +32,22 @@
 	            zoomHeight:400
 	        });
 		})
+		/*购物车弹出框*/
+
 	</script>
+<style type="text/css">
+	.orange{ color: #CC0000;}
+	a.bt_orange:link,a.bt_orange:visited{color:#FFFFFF;width:107px; height:27px; line-height:27px;background:url(<?php echo C('IMG_URL');?>chakanBtn.jpg) no-repeat; text-align:center; font-weight:bold;cursor:pointer; display:block; _display:inline; float:left; margin-left:60px;}
+	a.bt_blue:link,a.bt_blue:visited{color:#FFFFFF;width:107px; height:27px; line-height:27px;background:url(<?php echo C('IMG_URL');?>tiaoxuannBtn.jpg) no-repeat; text-align:center; font-weight:bold;cursor:pointer;display:block;_display:inline; float:right; margin-right:60px;}
+	.buy_blank{ width:350px; height:115px; border:3px solid #AAAAAA; position:absolute; background-color:#FFFFFF;}
+	.buy_blank p{ line-height:30px;}
+	.buy_blank h4{ border-bottom:2px solid #D0D0D0; font-weight:normal; height:30px; line-height:30px;background:url(<?php echo C('IMG_URL');?>buyicon.jpg) no-repeat 10px center; text-indent:28px; margin-bottom:10px; padding-left:20px;}
+	.buy_blank h4 span{ float:right; margin:10px 10px 0 0}
+	img, fieldset {border:0 none;}
+
+	.number_change{cursor:pointer;}
+
+</style>
 </head>
 <body>
 	<!-- 顶部导航 start -->
@@ -130,7 +145,7 @@
 			<div class="cart fl">
 				<dl>
 					<dt>
-						<a href="">去购物车结算</a>
+						<a href="<?php echo U('Shop/shoppingcart');?>">去购物车结算</a>
 						<b></b>
 					</dt>
 					<dd>
@@ -638,37 +653,21 @@
 					<ul>
 						<li><span>商品编号： </span>971344</li>
 						<li class="market_price"><span>定价：</span><em>￥6399.00</em></li>
-						<li class="shop_price"><span>本店价：</span> <strong>￥6299.00</strong> <a href="">(降价通知)</a></li>
-						<li><span>上架时间：</span>2012-09-12</li>
+						<li class="shop_price"><span>本店价：</span> <strong><?php echo ($goodsData['goods_price']); ?></strong> <a href="">(降价通知)</a></li>
+						<li><span>上架时间：</span><?php echo (date('Y-m-d ',$goodsData["add_time"])); ?></li>
 						<li class="star"><span>商品评分：</span> <strong></strong><a href="">(已有21人评价)</a></li> <!-- 此处的星级切换css即可 默认为5星 star4 表示4星 star3 表示3星 star2表示2星 star1表示1星 -->
 					</ul>
 					<form action="" method="post" class="choose">
 						<ul>
-							<li class="product">
-								<dl>
-									<dt>颜色：</dt>
-									<dd>
-										<a class="selected" href="javascript:;">黑色 <input type="radio" name="color" value="黑色" checked="checked" /></a>
-										<a href="javascript:;">白色 <input type="radio" name="color" value="白色" /></a>
-										<a href="javascript:;">蓝色 <input type="radio" name="color" value="蓝色" /></a>
-										<input type="hidden" name="" value="" />
-									</dd>
-								</dl>
-							</li>
-
-							<li class="product">
-								<dl>
-									<dt>版本：</dt>
-									<dd>
-										<a href="javascript:;">i3 4G内存版 <input type="radio" name="ver" value="" /></a>
-										<a href="javascript:;">i5 4G内存版 <input type="radio" name="ver" value=""  /></a>
-										<a class="selected" href="javascript:;">i5 8G内存版<input type="radio" name="ver" value="" checked="checked" /></a>
-										<a href="javascript:;">SSD超极本 <input type="radio" name="ver" value="" /></a>
-										<input type="hidden" name="" value="" />
-									</dd>
-								</dl>
-							</li>
-							
+						<?php if(is_array($more)): $i = 0; $__LIST__ = $more;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vol): $mod = ($i % 2 );++$i;?><li class="product">
+									<dl>
+										<dt><?php echo ($vol["attr_name"]); ?>:</dt>
+										<dd>
+										<?php if(is_array($vol["git"])): foreach($vol["git"] as $k=>$vv): ?><a <?php if(($k) == "0"): ?>class="selected"<?php endif; ?> href="javascript:;"><?php echo ($vv); ?> <input type="radio" name="color" value="黑色" checked="checked" /></a><?php endforeach; endif; ?>
+											<input type="hidden" name="" value="" />
+										</dd>
+									</dl>
+								</li><?php endforeach; endif; else: echo "" ;endif; ?>
 							<li>
 								<dl>
 									<dt>购买数量：</dt>
@@ -684,7 +683,7 @@
 								<dl>
 									<dt>&nbsp;</dt>
 									<dd>
-										<input type="submit" value="" class="add_btn" />
+										<input type="btn" value="" class="add_btn"  onclick='show(<?php echo ($goodsData["id"]); ?>)'/>
 									</dd>
 								</dl>
 							</li>
@@ -1065,10 +1064,41 @@
 			<a href=""><img src="<?php echo C('IMG_URL');?>beian.gif" alt="" /></a>
 		</p>
 	</div>
+
 	<!-- 底部版权 end -->
 
 	<script type="text/javascript">
 		document.execCommand("BackgroundImageCache", false, true);
 	</script>
+	<div class="buy_blank" id="cartBox" style="z-index: 99; top: 574px; left: 309.5px; display: none;">
+            <h4>
+                <span><a href="javascript:;" onclick="hideElement('cartBox')"><img src="<?php echo C('IMG_URL');?>close.jpg" title="点击关闭"onclick='closeIt()'></a></span>
+                该商品已成功添加到购物车
+            </h4>
+            <p style="padding-left:60px;">
+                购物车共计 <span class="orange"><strong id="goods_number"></strong></span> 个商品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                合计：<span class="orange"><strong id="goods_totalprice"></strong></span> 元
+            </p>
+            <p>
+                <a onclick="javascript:hideElement('cartBox')" class="bt_orange" target="_black"></a>
+                <a href="javascript:hideElement('cartBox')" class="bt_blue"></a>
+            </p>
+        </div>
+        <script type="text/javascript">
+        	function show(goods_id)
+        	{
+        		$.post("<?php echo U('shop/showShop');?>", {'goods_id':goods_id},function(data) {
+        			//console.log(data);
+        			$('#goods_number').html(data.number);
+        			$('#goods_totalprice').html(data.price);
+        			$('#cartBox').show();
+        		},'json');
+        		//
+        	}
+        	function closeIt()
+        	{
+        		$('#cartBox').hide();
+        	}
+        </script>
 </body>
 </html>

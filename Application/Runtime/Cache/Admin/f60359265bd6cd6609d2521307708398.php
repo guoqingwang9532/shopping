@@ -97,12 +97,45 @@ a:visited{
     $.post("<?php echo U('Attr/ajaxR');?>",{'id' : id},function(data) {
         var html = '';
         for(var i=0; i<data.length;i++) {
-          html+='<tr>\
-          <td height="20" bgcolor="#FFFFFF" class="STYLE6" align="right">'+data[i].attr_name+'</td>\
-          <td  height="20" bgcolor="#FFFFFF" class="STYLE6" align="left"><input type="text"></td>\
-        </tr>';
+          if (data[i].attr_sel == 0) {
+            html+='<tr>\
+            <td height="20" bgcolor="#FFFFFF" class="STYLE6" align="right" width="400">'+data[i].attr_name+'</td>\
+            <td  height="20" bgcolor="#FFFFFF" class="STYLE6" align="left"><input type="text" name="attr['+data[i].id+']"></td>\
+            </tr>';
+         }else {
+            html+='<tr>\
+            <td height="20" bgcolor="#FFFFFF" class="STYLE6" align="right"><span onclick="addAttrName(this)">[+]</span>'+data[i].attr_name+'</td>\
+            <td  height="20" bgcolor="#FFFFFF" class="STYLE6" align="left"><select name="attr['+data[i].id+'][]">';
+             var attr_val = data[i].attr_vals.split(',');
+             for (var j = 0; j <attr_val.length; j++) {
+               html+='<option value='+attr_val[j]+'>'+attr_val[j]+'</option>'
+             }
+      
+            html+='</selecte></td></tr>'
+          ;
+
+         }
         }
-        $('#attrCheck').html(html);
+      $('#attrCheck').html(html);
+    },'json')
+  }
+  //点击增加和删除属性的函数
+  function addAttrName(obj) {
+    var tr = $(obj).parent().parent();
+    var tr_fz = tr.clone();
+    tr_fz.find('span[onclick]').remove();
+    tr_fz.find('td:first').prepend('<span onclick="$(this).parent().parent().remove()">[-]</span>');
+    tr.after(tr_fz);
+  }
+  //ajax 操作联动
+  function getAjax(id,name) {
+    $.post("<?php echo U('Category/getAjax');?>",{'aid' : id},function(data) {
+        var html ='<option>-扩展分类-</option>'
+        for (var i = 0; i < data.length; i++) {
+            html+= '<option value="'+data[i].id+'">'+data[i].cate_name+'</option>';
+        }
+        //alert(html);
+        $('#'+name).html(html);
     },'json')
   }
 
@@ -151,11 +184,30 @@ a:visited{
       <form action="/index.php/Admin/Goods/tianjia" method="post" enctype="multipart/form-data">
       
         <table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#a8c7ce" id="general-tab-content">
-
           <tr>
             <td height="20" bgcolor="#FFFFFF" class="STYLE6"><div align="right"><span class="STYLE19">商品名称：</span></div></td>
             <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="left">
             <input type="text" name="goods_name" />
+            </div></td>
+          </tr>
+          <tr>
+            <td height="20" bgcolor="#FFFFFF" class="STYLE6"><div align="right"><span class="STYLE19">主分类：</span></div></td>
+            <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="left">
+            <select name="cat_id" onchange="getAjax(this.value,'cat_sec')">
+              <option>主分类</option>
+              <?php if(is_array($cData)): $i = 0; $__LIST__ = $cData;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vol): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vol["id"]); ?>"><?php echo ($vol["cate_name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+            </select>
+            </div></td>
+          </tr>
+          <tr>
+            <td height="20" bgcolor="#FFFFFF" class="STYLE6"><div align="right"><span class="STYLE19">扩展分类：</span></div></td>
+            <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="left">
+            <select name="cat_sec" id = 'cat_sec'onchange="getAjax(this.value,'cat_thr')">
+              <option>扩展类</option>
+            </select>
+            <select name="cat_thr" id='cat_thr'>
+              <option>扩展类</option>
+            </select>
             </div></td>
           </tr>
           <tr>
@@ -193,7 +245,7 @@ a:visited{
               <td height="20" bgcolor="#FFFFFF" class="STYLE6"><div align="right"><span class="STYLE19">商品属性：</span></div>
               </td>
               <td height="20" bgcolor="#FFFFFF" class="STYLE6"align='left'>
-                <select name='Type_name' onchange='showAttr(this.value)'>
+                <select name='type_id' onchange='showAttr(this.value)'>
                   <option value='0'>全部分类</option>
                   <?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vol): $mod = ($i % 2 );++$i;?><option value='<?php echo ($vol["id"]); ?>'><?php echo ($vol["type_name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
                 </select>

@@ -9,6 +9,8 @@ class GoodsController extends AdminController
 	public function tianjia()
 	{
 		if (IS_POST) {
+			/*$data = I('post.');
+			dump($data);die;*/
 			$model = M('goods');
 			$data = $model->create();
 			//$data['add_time'] = $data['update_time'] = time();
@@ -22,6 +24,8 @@ class GoodsController extends AdminController
 			//dump($data);die;
 				if ($goods_id = $model->add($data)) {
 					$this ->uploadMore($goods_id);
+					$this->goodsAttr($goods_id);
+					$this->deal_goods($goods_id);
 					$this->success('添加成功',U('showlist'),1);
 					exit;
 				} else {
@@ -32,6 +36,9 @@ class GoodsController extends AdminController
 		} else {
 			$typeModel = M('type');
 			$data = $typeModel->select();
+			$cModel = M('category');
+			$cData = $cModel -> where('pid=0')->select();
+			$this->assign('cData', $cData);
 			$this->assign('data', $data);
 			$this->display();
 		}
@@ -71,7 +78,7 @@ class GoodsController extends AdminController
 			
 				//echo "ok";
 			}
-		}
+	
 		$upload = new \Think\Upload();// 实例化上传类      
 		$upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型 
 		$upload->rootPath  =  './Uploads/' ;  
@@ -89,7 +96,8 @@ class GoodsController extends AdminController
 		$goods_small_logo = $upload ->rootPath . $rs['savepath'] . 'S_' . $rs['savename'];
 		$image->thumb(100, 100)->save($goods_small_logo);
 		$data['goods_big_logo'] = $goods_big_logo;
-		$data['goods_small_logo'] = $goods_small_logo;
+		$data['goods_small_logo'] = $goods_small_logo;	
+		}
 	}
 
 	/**
@@ -198,6 +206,63 @@ class GoodsController extends AdminController
 	 	unlink($data['goods_pics_s']);
 	 	$goods_pic_model -> delete($id);
 	 	$this->ajaxReturn(array('status'=>1,"msg"=>'ok'));
+	 }
+
+	 /**
+	  * 处理商品和属性的详细的方法，这个是关联一个表，因为goods那个表只能
+	  * 记录个type_id不能显示的全
+	  *@author：wgq
+	  *时间：2016年7月24日19:46:18；
+	  * 
+	  */
+	 public function goodsAttr($goods_id)
+	 {
+	 	$data = I('post.attr');
+	 	//dump($data);die;
+	 	$goodsAttrModel = M('goods_attr');
+	 	if (!empty($data)) {
+		 	foreach ($data as $key => $value) {
+		 		if (is_array($value)) {
+		 			foreach ($value as $k => $v) {
+		 				$arr = array(
+		 					'goods_id' => $goods_id,
+		 					'attr_id' => $key,
+		 					'attr_value' =>$v,
+		 					);
+		 				$goodsAttrModel->add($arr);
+		 			}
+
+		 		} else {
+		 			$arr = array(
+		 					'goods_id' => $goods_id,
+		 					'attr_id' => $key,
+		 					'attr_value' =>$value,
+		 					);
+		 			$goodsAttrModel->add($arr);
+	 			}
+	 		}
+	 		
+	 	}
+	 }
+
+	 /**
+	  * 处理goods_cat详细表的方法
+	  *@author:wgq
+	  * 时间：2016年7月24日23:33:35
+	  */
+	 
+	 public function deal_goods($goods_id)
+	 {
+	 	$data1 = I('post.cat_sec');
+	 	$data2 = I('post.cat_thr');
+	 	M('goods_cat') -> add(
+	 		array('goods_id'=>$goods_id,
+	 			 'cat_id' => $data1,)	
+	 		);
+	 	M('goods_cat') -> add(
+	 		array('goods_id'=>$goods_id,
+	 			 'cat_id' => $data2,)	
+	 		);
 	 }
 }
 

@@ -40,6 +40,14 @@ class TypeController extends AdminController
 		}
 		
 	}
+
+	public function test()
+	{
+		$model = M('area');
+		$data = $model ->select();
+		$this->assign('province',$data);
+		$this->display();
+	}
 }
 
 

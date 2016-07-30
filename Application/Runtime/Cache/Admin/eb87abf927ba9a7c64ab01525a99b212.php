@@ -50,12 +50,24 @@ a:visited{
         <td height="20" bgcolor="#FFFFFF" class="STYLE6"><div align="center"><span class="STYLE19">'+data[i].id+'</span></div></td>\
         <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">'+data[i].attr_name+'</div></td>\
         <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">'+data[i].type_name+'</div></td>\
-        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">'+(data[i].attr_sel? '多选':'单选')+'</div></td>\
-        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">'+(data[i].attr_write? '列表':'单入')+'</div></td>\
-        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">'+data[i].attr_vals+'</div></td>\
+        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">'+(data[i].attr_sel == 1? '多选':'单选')+'</div></td>\
+        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">'+(data[i].attr_write ==1 ? '列表':'单入')+'</div></td>\
+        <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">'+data[i].attr_vals +'</div></td>\
         <td height="20" bgcolor="#FFFFFF"><div align="center" class="STYLE21">\
         <img src="<?php echo C('AD_IMG_URL');?>del.gif" width="10" height="10" /> 删除 | 查看 | <img src="<?php echo C('AD_IMG_URL');?>edit.gif" width="10" height="10" /> 编辑</div></td>\
       </tr>'
+       /* html += '<tr>\
+        <td height="20" bgcolor="#FFFFFF"><div align="center"><input type="checkbox" name="checkbox2" id="checkbox2" /></div></td>\
+          <td height="20" bgcolor="#FFFFFF" class="STYLE6"><div align="center"><span class="STYLE19">' + data[i].id + '</span></div></td>\
+          <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">' +data[i].attr_name +'</div></td>\
+          <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">' +data[i].type_name +'</div></td>\
+          <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">' +(data[i].attr_sel?'多选':'单选')+'</div></td>\
+          <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">' + (data[i].attr_write?"列表选择":"手工录入") + '</div></td>\
+          <td height="20" bgcolor="#FFFFFF" class="STYLE19"><div align="center">' + data[i].attr_vals+'</div></td>\
+          <td height="20" bgcolor="#FFFFFF"><div align="center" class="STYLE21">\
+            <img src="<?php echo C('AD_IMG_URL');?>del.gif" width="10" height="10" /> 删除| 查看 |<img src="<?php echo C('AD_IMG_URL');?>edit.gif" width="10" height="10" /> 编辑\
+          </div></td>\
+        </tr>';*/
       $('#attrTable ').append(html)
       }
       
